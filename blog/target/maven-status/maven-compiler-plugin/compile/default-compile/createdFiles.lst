@@ -1,8 +1,0 @@
-com\paddy\controller\CategoryController.class
-com\paddy\controller\CommentController.class
-com\paddy\controller\BlogLoginController.class
-com\paddy\controller\ArticleController.class
-com\paddy\controller\LinkController.class
-com\paddy\config\SecurityConfig.class
-com\paddy\BlogApplication.class
-com\paddy\filter\JwtAuthenticationTokenFilter.class
