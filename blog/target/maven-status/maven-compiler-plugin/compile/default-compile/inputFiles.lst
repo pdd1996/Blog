@@ -5,3 +5,4 @@ D:\Programs\Blog\blog\src\main\java\com\paddy\BlogApplication.java
 D:\Programs\Blog\blog\src\main\java\com\paddy\controller\CategoryController.java
 D:\Programs\Blog\blog\src\main\java\com\paddy\filter\JwtAuthenticationTokenFilter.java
 D:\Programs\Blog\blog\src\main\java\com\paddy\controller\LinkController.java
+D:\Programs\Blog\blog\src\main\java\com\paddy\controller\CommentController.java

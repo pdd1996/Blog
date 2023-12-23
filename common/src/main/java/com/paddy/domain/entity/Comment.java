@@ -2,6 +2,8 @@ package com.paddy.domain.entity;
 
 import java.util.Date;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("sg_comment")
 public class Comment {
     
     private Long id;

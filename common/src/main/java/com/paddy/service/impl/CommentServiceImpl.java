@@ -42,18 +42,50 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         Page<Comment> page = new Page(pageNum, pageSize);
         page(page, queryWrapper);
 
-        List<CommentVo> commentVoList = BeanCopyUtils.copyBeanList(page.getRecords(), CommentVo.class);
+        List<CommentVo> commentVoList = toCommentVoList(page.getRecords());
+
+        // 查询所有根评论对应的子评论集合，并且赋值给对应属性
+        for (CommentVo commentVo : commentVoList) {
+            // 查询对应的子评论
+            List<CommentVo> children  = getChildren(commentVo.getId());
+            // 赋值
+            commentVo.setChildren(children);
+        }
+
+        
         return ResponseResult.okResult(new PageVo(commentVoList, page.getTotal()));
     }
 
+    /**
+     * 根据根评论的id查询对应子评论的集合
+     * @param id 根评论的id
+     * @return
+     */
+    private List<CommentVo> getChildren(Long id) {
+        LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Comment::getRootId, id);
+        queryWrapper.orderByAsc(Comment::getCreateTime);
+        List<Comment> comments = list(queryWrapper);
+        List<CommentVo> commentVos = toCommentVoList(comments);
+        return commentVos;
+    }
+
+    // 私有方法
     private List<CommentVo> toCommentVoList(List<Comment> list) {
         List<CommentVo> commentVos = BeanCopyUtils.copyBeanList(list, CommentVo.class);
         // 遍历Vo
         for (CommentVo commentVo : commentVos) {
-            // 通过creatBy查询用户的昵称
+            // 通过createBy查询用户的昵称
+            String nickName = userService.getById(commentVo.getCreateBy()).getNickName();
+            commentVo.setUsername(nickName);
 
+            // 通过toCommentUserId查询用户的昵称并赋值
+            // 如果toCommentUserId ！= -1 才进行查询
+            if(commentVo.getToCommentId() != -1) {
+                String toCommentUserName = userService.getById(commentVo.getToCommentUserId()).getNickName();
+                commentVo.setToCommentUserName(toCommentUserName);
+            }
         }
-
 
         return  commentVos;
     }
