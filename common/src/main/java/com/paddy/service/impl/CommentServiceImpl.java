@@ -6,13 +6,18 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.paddy.domain.ResponseResult;
 import com.paddy.domain.vo.CommentVo;
 import com.paddy.domain.vo.PageVo;
+import com.paddy.enums.AppHttpCodeEnum;
+import com.paddy.exception.SystemException;
 import com.paddy.mapper.CommentMapper;
 import com.paddy.domain.entity.Comment;
 import com.paddy.service.CommentService;
 import com.paddy.service.UserService;
 import com.paddy.utils.BeanCopyUtils;
+import com.paddy.utils.SecurityUtils;
+import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -54,6 +59,17 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
         
         return ResponseResult.okResult(new PageVo(commentVoList, page.getTotal()));
+    }
+
+    @Override
+    public ResponseResult addComment(Comment comment) {
+//        comment.setCreateBy(SecurityUtils.getUserId());
+        // todo 评论不能为空
+        if (!StringUtils.hasText(comment.getContent())) {
+            throw new SystemException(AppHttpCodeEnum.CONTENT_NOT_NULL);
+        }
+        save(comment);
+        return ResponseResult.okResult();
     }
 
     /**
