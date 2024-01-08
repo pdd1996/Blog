@@ -1,6 +1,7 @@
 package com.paddy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.paddy.domain.ResponseResult;
 import com.paddy.domain.entity.User;
 
 /**
@@ -11,5 +12,6 @@ import com.paddy.domain.entity.User;
  */
 public interface UserService extends IService<User> {
 
+    ResponseResult userInfo();
 }
 
