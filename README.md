@@ -1,2 +1,2 @@
-# redis指令
+# redis指令 e
 redis-server.exe redis.windows.conf
