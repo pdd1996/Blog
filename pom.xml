@@ -78,14 +78,6 @@
                 <version>2.9.2</version>
             </dependency>
 
-            <!--七牛云依赖-->
-            <!-- https://mvnrepository.com/artifact/com.qiniu/qiniu-java-sdk -->
-            <dependency>
-                <groupId>com.qiniu</groupId>
-                <artifactId>qiniu-java-sdk</artifactId>
-                <version>7.13.0</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
