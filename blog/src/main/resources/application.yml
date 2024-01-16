@@ -27,3 +27,8 @@ mybatis-plus:
 redis:
   host: 127.0.0.1
   port: 6379
+
+oss:
+  accessKey: m2kHOVjh_I2UQ9zKMqKEh_RkRJvA5NCK7d_nGaad
+  secretKey: g8SqXIMXACPk20yhWpA8KnVc7DtmL2gTg4F731hl
+  bucket: sg-blog1234567
