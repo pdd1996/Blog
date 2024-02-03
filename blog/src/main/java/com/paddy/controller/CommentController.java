@@ -2,13 +2,20 @@ package com.paddy.controller;
 
 import com.paddy.constants.SystemCanstants;
 import com.paddy.domain.ResponseResult;
+import com.paddy.domain.dto.AddCommentDto;
 import com.paddy.domain.entity.Comment;
 import com.paddy.service.CommentService;
+import com.paddy.utils.BeanCopyUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/comment")
+@Api(tags = "评论", description = "评论相关接口")
 public class CommentController {
     @Autowired
     private CommentService commentService;
@@ -17,10 +24,16 @@ public class CommentController {
         return commentService.commentList(SystemCanstants.ARTICLE_COMMENT, articleId, pageNum, pageSize);
     }
     @PostMapping
-    public ResponseResult addComment(@RequestBody Comment comment) {
+    public ResponseResult addComment(@RequestBody AddCommentDto addCommentDto) {
+        Comment comment = BeanCopyUtils.copyBean(addCommentDto, Comment.class);
         return commentService.addComment(comment);
     }
     @GetMapping("/linkCommentList")
+    @ApiOperation(value = "友链评论列表", notes = "获取一页友链评论")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum",value = "页号"),
+            @ApiImplicitParam(name = "pageSize",value = "每页大小")
+    })
     public ResponseResult linkComment(Integer pageNum, Integer pageSize) {
         return commentService.commentList(SystemCanstants.LINK_COMMENT, null, pageNum, pageSize);
     }
